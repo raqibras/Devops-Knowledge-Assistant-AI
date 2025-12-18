@@ -46,9 +46,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5500",
-        "http://127.0.0.1:5500",
-        "http://0.0.0.0:5500"
+        "https://green-sea-0ca98b10f.3.azurestaticapps.net"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -57,18 +55,18 @@ app.add_middleware(
 
 
 # Mount static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+#app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Set up template directory
-templates = Jinja2Templates(directory="templates")
-
+#templates = Jinja2Templates(directory="templates")
+'''
 @app.get("/", response_class=HTMLResponse)
 async def get_home(request: Request):
     """
     Serve the main chat interface
     """
     return templates.TemplateResponse("index.html", {"request": request})
-
+'''
 
 @app.post("/api/chat/completion")
 async def chat_completion(chat_request: ChatRequest):
