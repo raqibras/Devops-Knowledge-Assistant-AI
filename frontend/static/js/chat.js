@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showLoading();
         
         // Send request to server
-        fetch('https://app-devops-ka-test-001.azurewebsites.net/api/chat/completion', {  //http://localhost:8000/api/chat/completion for local testing 2tier
+        fetch('<your-backend-api-url>', {  // eg: <app-service-url>/api/chat/completion
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
