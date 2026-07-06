@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - qa
-  # Runs when a PR is merged into Prod
+  # Runs when a PR is merged into main
   pull_request:
     types: [closed]
     branches:
@@ -12,10 +12,10 @@ on:
 
 jobs:
   # ---------------------------------------------------------
-  # 1. Build & Test — runs on every push to QA
+  # 1. Build & Test — runs on every push to qa
   # ---------------------------------------------------------
   build-and-test:
-    if: github.ref == 'refs/heads/QA' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/qa' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -31,14 +31,14 @@ jobs:
         run: echo "npm test / pytest / etc."
 
   # ---------------------------------------------------------
-  # 2. Deploy to QA — auto-deploy after tests pass on QA branch
+  # 2. Deploy to QA — auto-deploy after tests pass on qa branch
   # ---------------------------------------------------------
   deploy-qa:
     needs: build-and-test
-    if: github.ref == 'refs/heads/QA' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/qa' && github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
-      name: QA   # optional: track QA deploys as an environment too
+      name: QA   # matches the "QA" environment in Settings → Environments
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -50,20 +50,20 @@ jobs:
         run: echo "Optional: Slack/Teams notification that QA deploy is ready for testing"
 
   # ---------------------------------------------------------
-  # 3. Deploy to Prod — only runs once PR into Prod is merged,
-  #    AND only after required reviewers approve the 'production'
+  # 3. Deploy to Prod — only runs once PR into main is merged,
+  #    AND only after required reviewers approve the "Prod"
   #    environment (configured in repo settings, see notes below)
   # ---------------------------------------------------------
   deploy-prod:
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.base_ref == 'Prod'
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.base_ref == 'main'
     runs-on: ubuntu-latest
     environment:
-      name: Prod   # <-- this is the gate; GitHub pauses here for approval
+      name: Prod   # matches the "Prod" environment in Settings → Environments
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: Prod
+          ref: main
 
       - name: Deploy to Production environment
         run: echo "Add your Prod deployment steps here"
