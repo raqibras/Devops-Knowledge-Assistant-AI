@@ -69,4 +69,4 @@ jobs:
         run: echo "Add your Prod deployment steps here"
 
       - name: Notify team of Prod deployment
-        run: echo "Optional: Slack/Teams notification that deploy succeeded"
+        run: echo "Optional- Slack/Teams notification that deploy succeeded"
