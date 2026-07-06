@@ -47,7 +47,7 @@ jobs:
         run: echo "Add your QA deployment steps here (e.g., aws/azure/gcp CLI, kubectl, etc.)"
 
       - name: Notify QA team
-        run: echo "Optional: Slack/Teams notification that QA deploy is ready for testing"
+        run: echo "Optional- Slack/Teams notification that QA deploy is ready for testing"
 
   # ---------------------------------------------------------
   # 3. Deploy to Prod — only runs once PR into main is merged,
